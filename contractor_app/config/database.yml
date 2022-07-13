@@ -1,0 +1,15 @@
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  host: db
+  username: pilot
+  password: pilot
+  pool: 5
+
+development:
+  <<: *default
+  database: contractor_app_development
+
+test:
+  <<: *default
+  database: contractor_app_test

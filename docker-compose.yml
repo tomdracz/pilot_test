@@ -1,0 +1,34 @@
+services:
+  db:
+    image: postgres:11-alpine
+    ports:
+      - 5433:5432
+    volumes:
+      - pilot_postgresql:/var/lib/pilot_postgres/data
+    environment:
+      - POSTGRES_USER=pilot
+      - POSTGRES_PASSWORD=pilot
+      - PGDATA=/var/lib/pilot_postgres/data
+      - LANG=en_GB.utf8
+    restart: on-failure
+  contractor:
+    build: ./contractor_app
+    command: bash -c "rm -f tmp/pids/server.pid && bundle exec rails s -p 3000 -b '0.0.0.0'"
+    volumes:
+      - ./contractor_app:/app
+    ports:
+      - "3010:3000"
+    depends_on:
+      - db
+  manager:
+    build: ./manager_app
+    command: bash -c "rm -f tmp/pids/server.pid && bundle exec rails s -p 3000 -b '0.0.0.0'"
+    volumes:
+      - ./manager_app:/app
+    ports:
+      - "3011:3000"
+    depends_on:
+      - db
+
+volumes:
+  pilot_postgresql:
