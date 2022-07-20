@@ -11,24 +11,35 @@ services:
       - PGDATA=/var/lib/pilot_postgres/data
       - LANG=en_GB.utf8
     restart: on-failure
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: 'rabbitmq'
+    ports:
+        - 5673:5672
+        - 15673:15672
+    volumes:
+        - rabbitmq_data:/var/lib/rabbitmq/
+        - rabbitmq_log:/var/log/rabbitmq
   contractor:
     build: ./contractor_app
-    command: bash -c "rm -f tmp/pids/server.pid && bundle exec rails s -p 3000 -b '0.0.0.0'"
     volumes:
       - ./contractor_app:/app
     ports:
       - "3010:3000"
     depends_on:
       - db
+      - rabbitmq
   manager:
     build: ./manager_app
-    command: bash -c "rm -f tmp/pids/server.pid && bundle exec rails s -p 3000 -b '0.0.0.0'"
     volumes:
       - ./manager_app:/app
     ports:
       - "3011:3000"
     depends_on:
       - db
+      - rabbitmq
 
 volumes:
   pilot_postgresql:
+  rabbitmq_data:
+  rabbitmq_log:

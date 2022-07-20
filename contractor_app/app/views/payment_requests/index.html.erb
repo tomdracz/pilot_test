@@ -1,1 +1,12 @@
-FOOBAR
+<p style="color: green"><%= notice %></p>
+
+<h1>Payment requests</h1>
+
+<div id="payment_requests">
+  <% @payment_requests.each do |payment_request| %>
+    <%= render payment_request %>
+    <br>
+  <% end %>
+</div>
+
+<%= link_to "New payment request", new_payment_request_path %>

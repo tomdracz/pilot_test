@@ -54,3 +54,5 @@ group :development do
   # gem "spring"
 end
 
+
+gem "hutch", "~> 1.1"

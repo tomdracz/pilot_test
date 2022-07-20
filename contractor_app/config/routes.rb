@@ -3,4 +3,6 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   root "payment_requests#index"
+
+  resources :payment_requests, only: [:index, :new, :create]
 end
