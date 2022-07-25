@@ -15,7 +15,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_07_20_141347) do
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
 
-  create_table "payment_requests", force: :cascade do |t|
+  create_table "payment_requests", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.decimal "amount", null: false
     t.string "currency", null: false
     t.text "description", null: false

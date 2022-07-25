@@ -1,0 +1,23 @@
+<div id="<%= dom_id payment_request %>">
+  <p>
+    <strong>Amount:</strong>
+    <%= payment_request.amount %>
+  </p>
+
+  <p>
+    <strong>Currency:</strong>
+    <%= payment_request.currency %>
+  </p>
+
+  <p>
+    <strong>Description:</strong>
+    <%= payment_request.description %>
+  </p>
+
+  <p>
+    <strong>Status:</strong>
+    <%= payment_request.status %>
+  </p>
+  <%= button_to 'Approve', payment_request_path(payment_request), params: { decision: 'approved' }, method: :patch %>
+  <%= button_to 'Reject', payment_request_path(payment_request), params: { decision: 'rejected' }, method: :patch %>
+</div>

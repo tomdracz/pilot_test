@@ -13,7 +13,7 @@ class PaymentRequestCreator
     PaymentRequest.transaction do
       saved = @payment_request.save
       if saved
-        PaymentRequestPublisher.publish({foo: 'bar'})
+        PaymentRequestPublisher.publish(**event_params)
       end
     end
     self
@@ -24,4 +24,8 @@ class PaymentRequestCreator
   end
 
   delegate :errors, to: :payment_request
+
+  def event_params
+    @payment_request.attributes.symbolize_keys.slice(:id, :amount, :currency, :description)
+  end
 end

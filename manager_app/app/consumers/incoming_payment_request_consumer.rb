@@ -3,8 +3,6 @@ class IncomingPaymentRequestConsumer
   consume 'contractor.paymentreq.created'
 
   def process(message)
-    puts "DEBUG"
-    puts message
-    PaymentRequest.create(amount: message[:id], currency: 'USD', description: 'TEST')
+    PaymentRequest.create!(id: message[:id], amount: message[:amount], currency: message[:currency], description: message[:description])
   end
 end
